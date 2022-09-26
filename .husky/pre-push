@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# CI set to true to have same result of our CI server
-
-CI=true npm run unit && CI=true NODE_ENV=production npm run build
