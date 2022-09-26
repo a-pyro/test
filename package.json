@@ -16,7 +16,8 @@
     "react-redux": "^8.0.2",
     "react-scripts": "5.0.1",
     "typescript": "^4.8.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx} -c eslint-pre-commit.json"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,11 +26,27 @@
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run nuxt-build && npm run unit"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "lint-staged": {
+    "*.{ts,js,jsx,tsx}": [
+      "prettier --write",
+      "npm run lint -- --fix",
+      "npm run lint",
+      "git add"
+    ],
+    "*.{scss,css}": "stylelint"
   },
   "browserslist": {
     "production": [
@@ -44,6 +61,10 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.24.0",
+    "eslint-plugin-react": "^7.31.8",
     "husky": "^8.0.1"
   }
 }
